@@ -1,4 +1,4 @@
-import mysql, { OkPacket } from "mysql2";
+import * as mysql from "mysql2";
 require("dotenv").config();
 
 const pool = mysql.createPool({
@@ -31,7 +31,7 @@ const connectionFunctions = {
       pool.query(
         `DELETE FROM users WHERE id = ?`,
         id,
-        (err: Error, result: OkPacket) => {
+        (err: Error, result: mysql.OkPacket) => {
           if (err) {
             reject(err);
           }
@@ -50,7 +50,7 @@ const connectionFunctions = {
       pool.query(
         `INSERT INTO users (first_name, last_name, age) VALUES (?,?,?)`,
         [user.first_name, user.last_name, user.age],
-        (err: Error, result: OkPacket) => {
+        (err: Error, result: mysql.OkPacket) => {
           if (err) {
             reject(err);
           }

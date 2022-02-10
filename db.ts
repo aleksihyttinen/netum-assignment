@@ -1,4 +1,4 @@
-import mysql from "mysql2";
+import mysql, { OkPacket } from "mysql2";
 require("dotenv").config();
 
 const pool = mysql.createPool({
@@ -20,6 +20,24 @@ const connectionFunctions = {
         }
         resolve(result);
       });
+    });
+  },
+  deleteUser: (id: number) => {
+    return new Promise((resolve, reject) => {
+      pool.query(
+        `DELETE FROM users WHERE id = ?`,
+        id,
+        (err: Error, result: OkPacket) => {
+          if (err) {
+            reject(err);
+          }
+          if (result.affectedRows == 0) {
+            reject("Id not found");
+          } else {
+            resolve(`Deleted id: ${id} successfully`);
+          }
+        }
+      );
     });
   },
 };

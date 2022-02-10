@@ -10,7 +10,11 @@ const pool = mysql.createPool({
   connectionLimit: 10,
   queueLimit: 0,
 });
-
+interface User {
+  first_name: string;
+  last_name: string;
+  age: number;
+}
 const connectionFunctions = {
   getUsers: () => {
     return new Promise((resolve, reject) => {
@@ -36,6 +40,21 @@ const connectionFunctions = {
           } else {
             resolve(`Deleted id: ${id} successfully`);
           }
+        }
+      );
+    });
+  },
+  addUser: (user: User) => {
+    //Inserts a new word to a category
+    return new Promise((resolve, reject) => {
+      pool.query(
+        `INSERT INTO users (first_name, last_name, age) VALUES (?,?,?)`,
+        [user.first_name, user.last_name, user.age],
+        (err: Error, result: OkPacket) => {
+          if (err) {
+            reject(err);
+          }
+          resolve(result.insertId);
         }
       );
     });

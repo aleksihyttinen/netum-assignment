@@ -3,12 +3,11 @@ const app = express();
 import connection from "./db";
 
 interface User {
-  id: number;
   first_name: string;
-  last_name: number;
+  last_name: string;
   age: number;
 }
-
+app.use(express.json());
 app.get("/users", async (req: express.Request, res: express.Response) => {
   try {
     let data = await connection.getUsers();
@@ -37,6 +36,24 @@ app.delete(
     }
   }
 );
+app.post("/users", async (req: express.Request, res: express.Response) => {
+  let user: User = {
+    first_name: req.body.first_name,
+    last_name: req.body.last_name,
+    age: req.body.age,
+  };
+  console.log(user);
+  try {
+    let insertId = await connection.addUser(user);
+    res.statusCode = 201;
+    res.send(`Added user successfully with a id of ${insertId}`);
+  } catch (err) {
+    console.log(err);
+    res.statusCode = 400;
+    res.end();
+  }
+});
+
 const port: string | number = process.env.PORT || 8080;
 const server = app.listen(port, () => {
   console.log(`Listening on port ${port}`);

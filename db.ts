@@ -23,4 +23,4 @@ const connectionFunctions = {
     });
   },
 };
-module.exports = connectionFunctions;
+export default connectionFunctions;

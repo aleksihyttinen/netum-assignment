@@ -1,6 +1,6 @@
 import express from "express";
 const app = express();
-const connection = require("./db.ts");
+import connection from "./db";
 
 app.get("/users", async (req: express.Request, res: express.Response) => {
   try {

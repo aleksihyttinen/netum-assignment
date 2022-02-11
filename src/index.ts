@@ -2,13 +2,16 @@ import express from "express";
 const app = express();
 import connection from "./db";
 const path = require("path");
+const cors = require("cors");
 interface User {
   first_name: string;
   last_name: string;
   age: number;
 }
-app.use(express.static("frontend/build"));
+app.use(cors());
+app.use(express.static(path.join(__dirname + "/../frontend/build/")));
 app.use(express.json());
+
 app.get("/users", async (req: express.Request, res: express.Response) => {
   try {
     let data = await connection.getUsers();
@@ -55,7 +58,7 @@ app.post("/users", async (req: express.Request, res: express.Response) => {
   }
 });
 app.get("*", (req: express.Request, res: express.Response) => {
-  res.sendFile(path.join(__dirname + "/frontend/build/index.html"));
+  res.sendFile(path.join(__dirname + "/../frontend/build/index.html"));
 });
 const port: string | number = process.env.PORT || 8080;
 const server = app.listen(port, () => {

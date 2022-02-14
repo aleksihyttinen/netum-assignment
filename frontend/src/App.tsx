@@ -2,13 +2,18 @@ import React from "react";
 import "./App.css";
 import axios from "axios";
 import { Table } from "react-bootstrap";
+import EditUser from "./EditUser";
 function App() {
   const [users, setUsers] = React.useState([]);
+  const [edited, setEdited] = React.useState(false);
   React.useEffect(() => {
-    axios.get("http://localhost:8080/users").then((response) => {
-      setUsers(response.data);
-    });
-  }, []);
+    axios
+      .get("http://localhost:8080/users")
+      .then((response) => {
+        setUsers(response.data);
+      })
+      .catch((err) => console.log(err));
+  }, [edited]);
   console.log(users);
   return (
     <div className="App">
@@ -19,6 +24,7 @@ function App() {
               <th>First Name</th>
               <th>Last Name</th>
               <th>Age</th>
+              <th>Edit</th>
             </tr>
           </thead>
           <tbody>
@@ -27,6 +33,9 @@ function App() {
                 <td>{user.first_name}</td>
                 <td>{user.last_name}</td>
                 <td>{user.age}</td>
+                <td>
+                  <EditUser user={user} setEdited={setEdited} />
+                </td>
               </tr>
             ))}
           </tbody>

@@ -21,7 +21,7 @@ export default function EditUser({ user, setEdited }: Props) {
     console.log(editedUser);
     setModalVisibility(false);
     axios
-      .delete(`http://localhost:8080/users/100`)
+      .put(`http://localhost:8080/users/${user.id}`)
       .then((response) => {
         setEdited(true);
         console.log(response);

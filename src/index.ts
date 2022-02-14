@@ -33,10 +33,8 @@ app.delete(
       res.end();
     } catch (err) {
       console.log(err);
-      if (err == "Id not found") {
-        res.statusCode = 404;
-        res.end();
-      }
+      res.statusCode = 404;
+      res.end();
     }
   }
 );
@@ -54,6 +52,29 @@ app.post("/users", async (req: express.Request, res: express.Response) => {
   } catch (err) {
     console.log(err);
     res.statusCode = 400;
+    res.end();
+  }
+});
+app.put("/users/:id", async (req: express.Request, res: express.Response) => {
+  let id = parseInt(req.params.id);
+  let user: User = {
+    first_name: req.body.first_name,
+    last_name: req.body.last_name,
+    age: req.body.age,
+  };
+  try {
+    await connection.editUser(id, user);
+    res.statusCode = 200;
+    res.send({
+      id: id,
+      first_name: user.first_name,
+      last_name: user.last_name,
+      age: user.age,
+    });
+    res.end();
+  } catch (err) {
+    console.log(err);
+    res.statusCode = 404;
     res.end();
   }
 });

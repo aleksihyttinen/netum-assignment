@@ -1,6 +1,6 @@
 import React from "react";
 import axios from "axios";
-import { Button, Modal, Form } from "react-bootstrap";
+import { Button, Modal, Form, Alert } from "react-bootstrap";
 import { IUser } from "./Interfaces";
 interface Props {
   user: any;
@@ -8,24 +8,34 @@ interface Props {
 }
 export default function EditUser({ user, setEdited }: Props) {
   const [modalVisibility, setModalVisibility] = React.useState(false);
+  const [alert, showAlert] = React.useState(false);
   const [editedUser, setEditedUser] = React.useState<IUser>({
     first_name: user.first_name,
     last_name: user.last_name,
     age: user.age,
   });
   const saveChanges = () => {
-    console.log(editedUser);
-    setModalVisibility(false);
-    axios
-      .put(`http://localhost:8080/users/${user.id}`, editedUser)
-      .then((response) => {
-        setEdited(true);
-        console.log(response);
-      })
-      .catch((err) => console.log(err));
+    if (
+      editedUser.first_name.length === 0 ||
+      editedUser.last_name.length === 0 ||
+      isNaN(Number(editedUser.age))
+    ) {
+      showAlert(true);
+    } else {
+      axios
+        .put(`http://localhost:8080/users/${user.id}`, editedUser)
+        .then((response) => {
+          console.log(response);
+          setEdited(true);
+          setModalVisibility(false);
+          showAlert(false);
+        })
+        .catch((err) => console.log(err));
+    }
   };
   const handleClose = () => {
     setModalVisibility(false);
+    showAlert(false);
     setEditedUser({
       first_name: user.first_name,
       last_name: user.last_name,
@@ -77,7 +87,7 @@ export default function EditUser({ user, setEdited }: Props) {
                   className="number-input"
                   type="number"
                   min={0}
-                  value={editedUser.age}
+                  value={!isNaN(Number(editedUser.age)) ? editedUser.age : ""}
                   onChange={(e) => {
                     let intAge = parseInt(e.target.value);
                     setEditedUser({
@@ -94,6 +104,14 @@ export default function EditUser({ user, setEdited }: Props) {
             <Button variant="primary" onClick={saveChanges}>
               Save changes
             </Button>
+            <Alert
+              show={alert}
+              dismissible
+              onClose={() => showAlert(false)}
+              variant="danger"
+            >
+              Don't insert empty values
+            </Alert>
           </Modal.Footer>
         </Modal>
       </>

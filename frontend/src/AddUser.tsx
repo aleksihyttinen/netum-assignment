@@ -40,16 +40,25 @@ export default function AddUser({ setEdited }: Props) {
   };
   return (
     <span className="add-user">
-      <Button variant="secondary" onClick={() => setModalVisibility(true)}>
+      <Button
+        variant="secondary"
+        className="add-user-button"
+        onClick={() => setModalVisibility(true)}
+      >
         Add a new user
       </Button>
-      <Modal show={modalVisibility} backdrop="static" onHide={handleClose}>
+      <Modal
+        show={modalVisibility}
+        size="sm"
+        backdrop="static"
+        onHide={handleClose}
+      >
         <Modal.Header closeButton>
           <Modal.Title>Add a new user</Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <Form>
-            <Form.Group className="edit-user" controlId="formEditUser">
+            <Form.Group className="add-user" controlId="formAddUser">
               <Form.Label>First name</Form.Label>
               <Form.Control
                 placeholder="First name"
@@ -74,6 +83,7 @@ export default function AddUser({ setEdited }: Props) {
               />
               <Form.Label>Age</Form.Label>
               <Form.Control
+                className="number-input"
                 type="number"
                 placeholder="Age"
                 min={0}

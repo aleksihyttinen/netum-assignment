@@ -38,7 +38,12 @@ export default function EditUser({ user, setEdited }: Props) {
         Edit
       </Button>
       <>
-        <Modal show={modalVisibility} backdrop="static" onHide={handleClose}>
+        <Modal
+          show={modalVisibility}
+          size="sm"
+          backdrop="static"
+          onHide={handleClose}
+        >
           <Modal.Header closeButton>
             <Modal.Title>Edit user</Modal.Title>
           </Modal.Header>
@@ -69,6 +74,7 @@ export default function EditUser({ user, setEdited }: Props) {
                 />
                 <Form.Label>Age</Form.Label>
                 <Form.Control
+                  className="number-input"
                   type="number"
                   min={0}
                   value={editedUser.age}

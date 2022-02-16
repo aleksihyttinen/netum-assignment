@@ -2,8 +2,23 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  flex-direction: column;
 }
+
 .table > tbody {
   vertical-align: middle;
   font-size: large;
+}
+
+.add-user {
+  margin: 1rem;
+}
+.btn.btn-link.btn-sm {
+  padding: 0.2rem;
+}
+.btn.btn-link.btn-sm:focus {
+  box-shadow: none;
+}
+.table > :not(caption) > * > * {
+  padding: 0.75rem;
 }

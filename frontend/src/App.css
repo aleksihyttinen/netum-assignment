@@ -1,10 +1,12 @@
+* {
+  font-size: 2vh;
+}
 .App {
   display: flex;
   justify-content: center;
   align-items: center;
   flex-direction: column;
 }
-
 .table > tbody {
   vertical-align: middle;
   font-size: large;

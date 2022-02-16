@@ -8,7 +8,7 @@ interface Props {
 export default function EditUser({ user, setEdited }: Props) {
   const [modalVisibility, setModalVisibility] = React.useState(false);
   const deleteUser = () => {
-    axios.delete(`http://localhost:8080/users/${user.id}`).then((response) => {
+    axios.delete(`/users/${user.id}`).then((response) => {
       console.log(response);
       setEdited(true);
       setModalVisibility(false);

@@ -23,7 +23,7 @@ export default function EditUser({ user, setEdited }: Props) {
       showAlert(true);
     } else {
       axios
-        .put(`http://localhost:8080/users/${user.id}`, editedUser)
+        .put(`/users/${user.id}`, editedUser)
         .then((response) => {
           console.log(response);
           setEdited(true);

@@ -21,7 +21,7 @@ export default function AddUser({ setEdited }: Props) {
     ) {
       showAlert(true);
     } else {
-      axios.post(`http://localhost:8080/users/`, newUser).then((response) => {
+      axios.post(`/users/`, newUser).then((response) => {
         console.log(response);
         setEdited(true);
         setModalVisibility(false);

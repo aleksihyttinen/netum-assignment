@@ -10,7 +10,7 @@ function App() {
   const [edited, setEdited] = React.useState(false);
   React.useEffect(() => {
     axios
-      .get("http://localhost:8080/users")
+      .get("/users")
       .then((response) => {
         setUsers(response.data);
         setEdited(false);

@@ -1,18 +1,14 @@
 import React from "react";
 import axios from "axios";
 import { Button, Modal, Form } from "react-bootstrap";
+import { IUser } from "./Interfaces";
 interface Props {
   user: any;
   setEdited: Function;
 }
-interface User {
-  first_name: string;
-  last_name: string;
-  age: number;
-}
 export default function EditUser({ user, setEdited }: Props) {
   const [modalVisibility, setModalVisibility] = React.useState(false);
-  const [editedUser, setEditedUser] = React.useState<User>({
+  const [editedUser, setEditedUser] = React.useState<IUser>({
     first_name: user.first_name,
     last_name: user.last_name,
     age: user.age,
@@ -73,6 +69,8 @@ export default function EditUser({ user, setEdited }: Props) {
                 />
                 <Form.Label>Age</Form.Label>
                 <Form.Control
+                  type="number"
+                  min={0}
                   value={editedUser.age}
                   onChange={(e) => {
                     let intAge = parseInt(e.target.value);

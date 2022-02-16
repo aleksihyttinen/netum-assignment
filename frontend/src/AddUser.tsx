@@ -1,40 +1,47 @@
 import React from "react";
 import axios from "axios";
-import { Button, Modal, Form } from "react-bootstrap";
+import { Button, Modal, Form, Alert } from "react-bootstrap";
+import { IUser } from "./Interfaces";
 interface Props {
   setEdited: Function;
 }
-interface User {
-  first_name: string;
-  last_name: string;
-  age: number;
-}
 export default function AddUser({ setEdited }: Props) {
   const [modalVisibility, setModalVisibility] = React.useState(false);
-  const [newUser, setNewUser] = React.useState<User>({
+  const [alert, showAlert] = React.useState(false);
+  const [newUser, setNewUser] = React.useState<IUser>({
     first_name: "",
     last_name: "",
-    age: NaN,
+    age: undefined,
   });
   const addUser = () => {
-    axios.post(`http://localhost:8080/users/`, newUser).then((response) => {
-      console.log(response);
-      setEdited(true);
-      setModalVisibility(false);
-    });
+    if (
+      newUser.first_name.length === 0 ||
+      newUser.last_name.length === 0 ||
+      newUser.age === undefined
+    ) {
+      showAlert(true);
+    } else {
+      axios.post(`http://localhost:8080/users/`, newUser).then((response) => {
+        console.log(response);
+        setEdited(true);
+        setModalVisibility(false);
+        showAlert(false);
+      });
+    }
   };
   const handleClose = () => {
     setModalVisibility(false);
+    showAlert(false);
     setNewUser({
       first_name: "",
       last_name: "",
-      age: NaN,
+      age: undefined,
     });
   };
   return (
     <span className="add-user">
       <Button variant="secondary" onClick={() => setModalVisibility(true)}>
-        Add a new person
+        Add a new user
       </Button>
       <Modal show={modalVisibility} backdrop="static" onHide={handleClose}>
         <Modal.Header closeButton>
@@ -67,7 +74,9 @@ export default function AddUser({ setEdited }: Props) {
               />
               <Form.Label>Age</Form.Label>
               <Form.Control
+                type="number"
                 placeholder="Age"
+                min={0}
                 onChange={(e) => {
                   let intAge = parseInt(e.target.value);
                   setNewUser({
@@ -81,6 +90,14 @@ export default function AddUser({ setEdited }: Props) {
           </Form>
         </Modal.Body>
         <Modal.Footer>
+          <Alert
+            show={alert}
+            dismissible
+            onClose={() => showAlert(false)}
+            variant="danger"
+          >
+            Please insert all values before submitting
+          </Alert>
           <Button variant="primary" onClick={addUser}>
             Add user
           </Button>

@@ -88,7 +88,7 @@ export default function AddUser({ setEdited }: Props) {
                 placeholder="Age"
                 min={0}
                 onChange={(e) => {
-                  let intAge = parseInt(e.target.value);
+                  let intAge = Math.abs(parseInt(e.target.value));
                   setNewUser({
                     first_name: newUser.first_name,
                     last_name: newUser.last_name,
@@ -100,17 +100,17 @@ export default function AddUser({ setEdited }: Props) {
           </Form>
         </Modal.Body>
         <Modal.Footer>
+          <Button variant="primary" onClick={addUser}>
+            Add user
+          </Button>
           <Alert
             show={alert}
             dismissible
             onClose={() => showAlert(false)}
             variant="danger"
           >
-            Please insert all values before submitting
+            Don't insert empty values
           </Alert>
-          <Button variant="primary" onClick={addUser}>
-            Add user
-          </Button>
         </Modal.Footer>
       </Modal>
     </span>

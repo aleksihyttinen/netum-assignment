@@ -3,6 +3,8 @@ import "./App.css";
 import axios from "axios";
 import { Table } from "react-bootstrap";
 import EditUser from "./EditUser";
+import AddUser from "./AddUser";
+import DeleteUser from "./DeleteUser";
 function App() {
   const [users, setUsers] = React.useState([]);
   const [edited, setEdited] = React.useState(false);
@@ -11,12 +13,14 @@ function App() {
       .get("http://localhost:8080/users")
       .then((response) => {
         setUsers(response.data);
+        setEdited(false);
       })
       .catch((err) => console.log(err));
   }, [edited]);
   console.log(users);
   return (
     <div className="App">
+      <AddUser setEdited={setEdited} />
       <div className="Table-container">
         <Table bordered>
           <thead>
@@ -24,7 +28,7 @@ function App() {
               <th>First Name</th>
               <th>Last Name</th>
               <th>Age</th>
-              <th>Edit</th>
+              <th>Settings</th>
             </tr>
           </thead>
           <tbody>
@@ -35,6 +39,7 @@ function App() {
                 <td>{user.age}</td>
                 <td>
                   <EditUser user={user} setEdited={setEdited} />
+                  <DeleteUser user={user} setEdited={setEdited} />
                 </td>
               </tr>
             ))}

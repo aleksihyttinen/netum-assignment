@@ -3,7 +3,7 @@ import axios from "axios";
 import { Button, Modal, Form, Alert } from "react-bootstrap";
 import { IUser } from "./Interfaces";
 interface Props {
-  user: any;
+  user: IUser;
   setEdited: Function;
 }
 export default function EditUser({ user, setEdited }: Props) {

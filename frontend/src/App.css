@@ -32,3 +32,10 @@
 .number-input.form-control {
   width: 30%;
 }
+.first-name,
+.last-name {
+  min-width: 140px;
+}
+.age {
+  min-width: 80px;
+}

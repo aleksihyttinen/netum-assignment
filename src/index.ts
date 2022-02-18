@@ -5,10 +5,12 @@ const app = express();
 const path = require("path");
 const cors = require("cors");
 
-app.use(cors());
-app.use(express.static(path.join(__dirname + "/../frontend/build/")));
-app.use(express.json());
+//Middlewares used for the app
+app.use(cors()); //Handles cors policy
+app.use(express.static(path.join(__dirname + "/../frontend/build/"))); //Deploys frontend
+app.use(express.json()); //Parses request bodies as json
 
+//Get all
 app.get("/users", async (req: express.Request, res: express.Response) => {
   try {
     let data = await connection.getAllUsers();
@@ -19,6 +21,7 @@ app.get("/users", async (req: express.Request, res: express.Response) => {
     res.end();
   }
 });
+//Get by id
 app.get("/users/:id", async (req: express.Request, res: express.Response) => {
   let id = parseInt(req.params.id);
   try {
@@ -30,6 +33,7 @@ app.get("/users/:id", async (req: express.Request, res: express.Response) => {
     res.end();
   }
 });
+//Delete by id
 app.delete(
   "/users/:id",
   async (req: express.Request, res: express.Response) => {
@@ -46,6 +50,7 @@ app.delete(
     }
   }
 );
+//Post a new user
 app.post("/users", async (req: express.Request, res: express.Response) => {
   let user: IUser = {
     first_name: req.body.first_name,
@@ -63,6 +68,7 @@ app.post("/users", async (req: express.Request, res: express.Response) => {
     res.end();
   }
 });
+//Update a user by id
 app.put("/users/:id", async (req: express.Request, res: express.Response) => {
   let id = parseInt(req.params.id);
   let user: IUser = {
@@ -86,9 +92,13 @@ app.put("/users/:id", async (req: express.Request, res: express.Response) => {
     res.end();
   }
 });
+
+//If request is anythin else than the ones defined, send frontend html page
 app.get("*", (req: express.Request, res: express.Response) => {
   res.sendFile(path.join(__dirname + "/../frontend/build/index.html"));
 });
+
+//Start the server
 const port: string | number = process.env.PORT || 8080;
 const server = app.listen(port, () => {
   console.log(`Listening on port ${port}`);

@@ -2,6 +2,7 @@ import * as mysql from "mysql2";
 import { IUser } from "./Interfaces";
 require("dotenv").config();
 
+//Create a connection pool for queries
 const pool = mysql.createPool({
   host: process.env.HOST,
   user: process.env.USER,
@@ -11,7 +12,10 @@ const pool = mysql.createPool({
   connectionLimit: 10,
   queueLimit: 0,
 });
+
+//Connection functions return a promise of a sql query
 const connectionFunctions = {
+  //Get all user from database
   getAllUsers: () => {
     return new Promise((resolve, reject) => {
       pool.query(`SELECT * FROM users`, (err: Error, result: []) => {
@@ -22,6 +26,7 @@ const connectionFunctions = {
       });
     });
   },
+  //Get one user from database, id can be changed for a different parameter
   getUser: (id: number) => {
     return new Promise((resolve, reject) => {
       pool.query(
@@ -40,6 +45,7 @@ const connectionFunctions = {
       );
     });
   },
+  //Delete user by id
   deleteUser: (id: number) => {
     return new Promise((resolve, reject) => {
       pool.query(
@@ -58,6 +64,7 @@ const connectionFunctions = {
       );
     });
   },
+  //Add a new user
   addUser: (user: IUser) => {
     return new Promise((resolve, reject) => {
       pool.query(
@@ -72,6 +79,7 @@ const connectionFunctions = {
       );
     });
   },
+  //Update user
   editUser: (id: number, user: IUser) => {
     return new Promise((resolve, reject) => {
       pool.query(

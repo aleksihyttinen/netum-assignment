@@ -1,3 +1,4 @@
+/* Some basic css styling to center and style the table */
 * {
   font-size: 2vh;
 }
@@ -37,6 +38,7 @@
   width: 30%;
 }
 @media only screen and (min-width: 500px) {
+  /* If screen size is over 500px, set min-widths to columns to avoid layout sift and set table width to auto*/
   .table-container {
     width: auto;
   }

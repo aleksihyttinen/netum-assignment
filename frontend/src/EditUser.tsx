@@ -2,21 +2,23 @@ import React from "react";
 import axios from "axios";
 import { Button, Modal, Form, Alert } from "react-bootstrap";
 import { IUser } from "../../src/Interfaces";
-
+//Interface for props
 interface IProps {
   user: IUser;
   setEdited: Function;
 }
-
+//Return a button and a modal for editing a user based on id
 export default function EditUser({ user, setEdited }: IProps) {
-  const [modalVisibility, setModalVisibility] = React.useState(false);
-  const [alert, showAlert] = React.useState(false);
+  const [modalVisibility, setModalVisibility] = React.useState(false); //Boolean value for modal visibility
+  const [alert, showAlert] = React.useState(false); //Boolean value for alert visibility
   const [editedUser, setEditedUser] = React.useState<IUser>({
+    //Edited user object, initialized with the old user data
     first_name: user.first_name,
     last_name: user.last_name,
     age: user.age,
   });
 
+  //If inputs aren't empty, send put request to backend with the editedUser object
   const saveChanges = () => {
     if (
       editedUser.first_name.length === 0 ||
@@ -36,7 +38,7 @@ export default function EditUser({ user, setEdited }: IProps) {
         .catch((err) => console.log(err));
     }
   };
-
+  //Hide modal and alert and set editedUser to the default values
   const handleClose = () => {
     setModalVisibility(false);
     showAlert(false);
@@ -64,6 +66,7 @@ export default function EditUser({ user, setEdited }: IProps) {
           </Modal.Header>
           <Modal.Body>
             <Form>
+              {/* Form functionality isn't actually used here, but can be easily changed to work with submit if needed */}
               <Form.Group className="edit-user" controlId="formEditUser">
                 <Form.Label>First name</Form.Label>
                 <Form.Control

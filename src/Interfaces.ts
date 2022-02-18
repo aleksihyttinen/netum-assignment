@@ -1,3 +1,4 @@
+//Interfaces that are used often
 export interface IUser {
   id?: number;
   first_name: string;

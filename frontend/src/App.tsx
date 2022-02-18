@@ -23,7 +23,7 @@ function App() {
 
   React.useEffect(() => {
     axios
-      .get("/users")
+      .get("http://localhost:8080/users")
       .then((response) => {
         setUsers(response.data);
         setEdited(false);
@@ -43,6 +43,17 @@ function App() {
     }
     return " ";
   };
+  const handleSort = (column: string) => {
+    setSortConfig({
+      sortBy: column,
+      direction:
+        sortConfig.direction === "default"
+          ? "ascending"
+          : sortConfig.direction === "ascending"
+          ? "decending"
+          : "default",
+    });
+  };
 
   return (
     <div className="App">
@@ -53,50 +64,14 @@ function App() {
             <tr>
               <th
                 className="first-name"
-                onClick={() => {
-                  setSortConfig({
-                    sortBy: "first_name",
-                    direction:
-                      sortConfig.direction === "default"
-                        ? "ascending"
-                        : sortConfig.direction === "ascending"
-                        ? "decending"
-                        : "default",
-                  });
-                }}
+                onClick={() => handleSort("first_name")}
               >
                 First Name {getSortIcon("first_name")}
               </th>
-              <th
-                className="last-name"
-                onClick={() => {
-                  setSortConfig({
-                    sortBy: "last_name",
-                    direction:
-                      sortConfig.direction === "default"
-                        ? "ascending"
-                        : sortConfig.direction === "ascending"
-                        ? "decending"
-                        : "default",
-                  });
-                }}
-              >
+              <th className="last-name" onClick={() => handleSort("last_name")}>
                 Last Name {getSortIcon("last_name")}
               </th>
-              <th
-                className="age"
-                onClick={() => {
-                  setSortConfig({
-                    sortBy: "age",
-                    direction:
-                      sortConfig.direction === "default"
-                        ? "ascending"
-                        : sortConfig.direction === "ascending"
-                        ? "decending"
-                        : "default",
-                  });
-                }}
-              >
+              <th className="age" onClick={() => handleSort("age")}>
                 Age {getSortIcon("age")}
               </th>
               <th>Settings</th>

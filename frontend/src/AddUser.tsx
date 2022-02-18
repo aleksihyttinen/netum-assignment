@@ -1,11 +1,13 @@
 import React from "react";
 import axios from "axios";
 import { Button, Modal, Form, Alert } from "react-bootstrap";
-import { IUser } from "./Interfaces";
-interface Props {
+import { IUser } from "../../src/Interfaces";
+
+interface IProps {
   setEdited: Function;
 }
-export default function AddUser({ setEdited }: Props) {
+
+export default function AddUser({ setEdited }: IProps) {
   const [modalVisibility, setModalVisibility] = React.useState(false);
   const [alert, showAlert] = React.useState(false);
   const [newUser, setNewUser] = React.useState<IUser>({
@@ -13,6 +15,7 @@ export default function AddUser({ setEdited }: Props) {
     last_name: "",
     age: undefined,
   });
+
   const addUser = () => {
     if (
       newUser.first_name.length === 0 ||
@@ -29,6 +32,7 @@ export default function AddUser({ setEdited }: Props) {
       });
     }
   };
+
   const handleClose = () => {
     setModalVisibility(false);
     showAlert(false);
@@ -38,6 +42,7 @@ export default function AddUser({ setEdited }: Props) {
       age: undefined,
     });
   };
+
   return (
     <span className="add-user">
       <Button

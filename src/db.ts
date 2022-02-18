@@ -1,4 +1,5 @@
 import * as mysql from "mysql2";
+import { IUser } from "./Interfaces";
 require("dotenv").config();
 
 const pool = mysql.createPool({
@@ -10,11 +11,6 @@ const pool = mysql.createPool({
   connectionLimit: 10,
   queueLimit: 0,
 });
-interface User {
-  first_name: string;
-  last_name: string;
-  age: number;
-}
 const connectionFunctions = {
   getAllUsers: () => {
     return new Promise((resolve, reject) => {
@@ -62,7 +58,7 @@ const connectionFunctions = {
       );
     });
   },
-  addUser: (user: User) => {
+  addUser: (user: IUser) => {
     return new Promise((resolve, reject) => {
       pool.query(
         `INSERT INTO users (first_name, last_name, age) VALUES (?,?,?)`,
@@ -76,7 +72,7 @@ const connectionFunctions = {
       );
     });
   },
-  editUser: (id: number, user: User) => {
+  editUser: (id: number, user: IUser) => {
     return new Promise((resolve, reject) => {
       pool.query(
         `UPDATE users SET first_name = ?, last_name = ?, age = ? WHERE id = ?`,

@@ -1,12 +1,14 @@
 import React from "react";
 import axios from "axios";
 import { Button, Modal, Form, Alert } from "react-bootstrap";
-import { IUser } from "./Interfaces";
-interface Props {
+import { IUser } from "../../src/Interfaces";
+
+interface IProps {
   user: IUser;
   setEdited: Function;
 }
-export default function EditUser({ user, setEdited }: Props) {
+
+export default function EditUser({ user, setEdited }: IProps) {
   const [modalVisibility, setModalVisibility] = React.useState(false);
   const [alert, showAlert] = React.useState(false);
   const [editedUser, setEditedUser] = React.useState<IUser>({
@@ -14,6 +16,7 @@ export default function EditUser({ user, setEdited }: Props) {
     last_name: user.last_name,
     age: user.age,
   });
+
   const saveChanges = () => {
     if (
       editedUser.first_name.length === 0 ||
@@ -33,6 +36,7 @@ export default function EditUser({ user, setEdited }: Props) {
         .catch((err) => console.log(err));
     }
   };
+
   const handleClose = () => {
     setModalVisibility(false);
     showAlert(false);
@@ -42,6 +46,7 @@ export default function EditUser({ user, setEdited }: Props) {
       age: user.age,
     });
   };
+
   return (
     <span className="Edit-user">
       <Button variant="link" size="sm" onClick={() => setModalVisibility(true)}>

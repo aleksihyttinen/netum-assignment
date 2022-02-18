@@ -1,13 +1,16 @@
 import React from "react";
 import axios from "axios";
 import { Button, Modal } from "react-bootstrap";
-import { IUser } from "./Interfaces";
-interface Props {
+import { IUser } from "../../src/Interfaces";
+
+interface IProps {
   user: IUser;
   setEdited: Function;
 }
-export default function EditUser({ user, setEdited }: Props) {
+
+export default function EditUser({ user, setEdited }: IProps) {
   const [modalVisibility, setModalVisibility] = React.useState(false);
+
   const deleteUser = () => {
     axios.delete(`/users/${user.id}`).then((response) => {
       console.log(response);
@@ -15,6 +18,7 @@ export default function EditUser({ user, setEdited }: Props) {
       setModalVisibility(false);
     });
   };
+
   return (
     <span className="delete-user">
       <Button variant="link" size="sm" onClick={() => setModalVisibility(true)}>

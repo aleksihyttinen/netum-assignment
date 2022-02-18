@@ -1,13 +1,10 @@
 import express from "express";
-const app = express();
 import connection from "./db";
+import { IUser } from "./Interfaces";
+const app = express();
 const path = require("path");
 const cors = require("cors");
-interface User {
-  first_name: string;
-  last_name: string;
-  age: number;
-}
+
 app.use(cors());
 app.use(express.static(path.join(__dirname + "/../frontend/build/")));
 app.use(express.json());
@@ -50,7 +47,7 @@ app.delete(
   }
 );
 app.post("/users", async (req: express.Request, res: express.Response) => {
-  let user: User = {
+  let user: IUser = {
     first_name: req.body.first_name,
     last_name: req.body.last_name,
     age: req.body.age,
@@ -68,7 +65,7 @@ app.post("/users", async (req: express.Request, res: express.Response) => {
 });
 app.put("/users/:id", async (req: express.Request, res: express.Response) => {
   let id = parseInt(req.params.id);
-  let user: User = {
+  let user: IUser = {
     first_name: req.body.first_name,
     last_name: req.body.last_name,
     age: req.body.age,

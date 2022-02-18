@@ -5,8 +5,9 @@ import { Table } from "react-bootstrap";
 import EditUser from "./EditUser";
 import AddUser from "./AddUser";
 import DeleteUser from "./DeleteUser";
-import { IUser, ISortConfig } from "./Interfaces";
+import { IUser, ISortConfig } from "../../src/Interfaces";
 import sortArray from "./sortArray";
+
 function App() {
   const [users, setUsers] = React.useState<IUser[]>([]);
   const [sortedUsers, setSortedUsers] = React.useState<IUser[]>([]);

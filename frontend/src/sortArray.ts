@@ -1,9 +1,10 @@
-import { IUser, ISortConfig } from "./Interfaces";
+import { IUser, ISortConfig } from "../../src/Interfaces";
 interface IProps {
   users: IUser[];
   sortConfig: ISortConfig;
   setSortedUsers: Function;
 }
+
 export default function sortArray({
   users,
   sortConfig,

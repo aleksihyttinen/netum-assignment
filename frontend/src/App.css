@@ -6,6 +6,10 @@
   justify-content: center;
   align-items: center;
   flex-direction: column;
+  width: 100vw;
+}
+.table-container {
+  width: 95%;
 }
 .table > tbody {
   vertical-align: middle;

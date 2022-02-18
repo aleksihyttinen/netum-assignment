@@ -46,7 +46,7 @@ function App() {
   return (
     <div className="App">
       <AddUser setEdited={setEdited} />
-      <div className="Table-container">
+      <div className="table-container">
         <Table bordered>
           <thead>
             <tr>

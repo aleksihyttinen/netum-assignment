@@ -9,7 +9,7 @@
   width: 100vw;
 }
 .table-container {
-  width: 95%;
+  max-width: 95%;
 }
 .table > tbody {
   vertical-align: middle;
@@ -36,10 +36,15 @@
 .number-input.form-control {
   width: 30%;
 }
-.first-name,
-.last-name {
-  min-width: 140px;
-}
-.age {
-  min-width: 80px;
+@media only screen and (min-width: 500px) {
+  .table-container {
+    width: auto;
+  }
+  .first-name,
+  .last-name {
+    min-width: 140px;
+  }
+  .age {
+    min-width: 80px;
+  }
 }

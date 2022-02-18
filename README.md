@@ -1,5 +1,5 @@
 # netum-assignment
-Repository for the Netum summerjob assignment.  
+Repository for the Netum summer job assignment.  
 
 This app is hosted at https://alehyt-netum-assignment.herokuapp.com/  
 

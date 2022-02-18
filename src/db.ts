@@ -16,7 +16,7 @@ interface User {
   age: number;
 }
 const connectionFunctions = {
-  getUsers: () => {
+  getAllUsers: () => {
     return new Promise((resolve, reject) => {
       pool.query(`SELECT * FROM users`, (err: Error, result: []) => {
         if (err) {
@@ -24,6 +24,24 @@ const connectionFunctions = {
         }
         resolve(result);
       });
+    });
+  },
+  getUser: (id: number) => {
+    return new Promise((resolve, reject) => {
+      pool.query(
+        `SELECT * FROM users WHERE id = ?`,
+        id,
+        (err: Error, result: mysql.OkPacket) => {
+          if (err) {
+            reject(err);
+          }
+          if (result.affectedRows == 0) {
+            reject("Id not found");
+          } else {
+            resolve(result);
+          }
+        }
+      );
     });
   },
   deleteUser: (id: number) => {
@@ -61,8 +79,8 @@ const connectionFunctions = {
   editUser: (id: number, user: User) => {
     return new Promise((resolve, reject) => {
       pool.query(
-        `UPDATE users SET first_name = ?, last_name = ?, age = ? WHERE users.id = ${id}`,
-        [user.first_name, user.last_name, user.age],
+        `UPDATE users SET first_name = ?, last_name = ?, age = ? WHERE id = ?`,
+        [user.first_name, user.last_name, user.age, id],
         (err: Error, result: mysql.OkPacket) => {
           if (err) {
             reject(err);

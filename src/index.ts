@@ -14,7 +14,18 @@ app.use(express.json());
 
 app.get("/users", async (req: express.Request, res: express.Response) => {
   try {
-    let data = await connection.getUsers();
+    let data = await connection.getAllUsers();
+    res.send(data);
+  } catch (err) {
+    console.log(err);
+    res.statusCode = 400;
+    res.end();
+  }
+});
+app.get("/users/:id", async (req: express.Request, res: express.Response) => {
+  let id = parseInt(req.params.id);
+  try {
+    let data = await connection.getUser(id);
     res.send(data);
   } catch (err) {
     console.log(err);
